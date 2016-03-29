@@ -13,7 +13,7 @@ public class Crear {
 
     static String driver = "org.exist.xmldb.DatabaseImpl";
 
-    public boolean crearColeccion(String direccionServer, String login, String password, String nombre){
+    public static boolean Coleccion(String direccionServer, String login, String password, String nombre){
 
         try {
 
@@ -28,9 +28,9 @@ public class Crear {
             String uri = "xmldb:exist://"+direccionServer+"/exist/xmlrpc";
             Collection col = DatabaseManager.getCollection(uri+"/db", login, password);
 
+            //Creando la coleccion
             CollectionManagementService colService = (CollectionManagementService) col.getService("CollectionManagementService", "1.0");
             colService.createCollection(nombre);
-
 
             return true;
 

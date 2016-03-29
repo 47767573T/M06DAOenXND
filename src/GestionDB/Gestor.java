@@ -34,7 +34,7 @@ public class Gestor {
 
     public static boolean crearColeccion(String login, String password, String nombreCol) {
 
-        return Crear.crearColeccion(direccionServer, login, password, nombreCol);
+        return Crear.Coleccion(direccionServer, login, password, nombreCol);
 
     }
 
