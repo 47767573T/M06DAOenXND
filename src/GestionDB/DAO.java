@@ -16,7 +16,7 @@ public class DAO {
     static String admin = "";
     static String password = "";
 
-    
+
     public static boolean iniciarConexion (String ip, String puerto){
 
         String direccionServer = ip+":"+puerto;

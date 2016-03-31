@@ -2,6 +2,7 @@ package GestionDB;
 
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
+import org.xmldb.api.base.Database;
 import org.xmldb.api.base.Resource;
 import org.xmldb.api.base.XMLDBException;
 
@@ -12,8 +13,17 @@ import java.io.File;
  */
 public class Recurso {
 
+    private static String driver = "org.exist.xmldb.DatabaseImpl";
+
     public static boolean introducir (String uri, String login, String password, String nombreCol
             , String pathRecurso) {
+
+        Class cl = Class.forName(driver);
+        Database database = (Database) cl.newInstance();
+        database.setProperty("create-database", "true");
+
+        // crear el manegador
+        DatabaseManager.registerDatabase(database);
 
         //Crear fichero con la ruta del recurso
         File fichero = new File(pathRecurso);
