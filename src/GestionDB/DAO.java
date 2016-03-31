@@ -16,14 +16,7 @@ public class DAO {
     static String admin = "";
     static String password = "";
 
-    public DAO() {
-    }
-
-    public DAO(String admin, String password) {
-        this.admin = admin;
-        this.password = password;
-    }
-
+    
     public static boolean iniciarConexion (String ip, String puerto){
 
         String direccionServer = ip+":"+puerto;
@@ -62,5 +55,57 @@ public class DAO {
     public String ConsultaEnXquery(String query){
 
         return Consulta.enXQUERY(query, this.xconn);
+    }
+
+    //CONSTRUCTORS
+    public DAO() {
+    }
+
+    public DAO(String admin, String password) {
+        this.admin = admin;
+        this.password = password;
+    }
+
+    //GETTERS
+    public static XQDataSource getXqs() {
+        return xqs;
+    }
+
+    public static XQConnection getXconn() {
+        return xconn;
+    }
+
+    public static String getUri() {
+        return uri;
+    }
+
+    public static String getAdmin() {
+        return admin;
+    }
+
+    public static String getPassword() {
+        return password;
+    }
+
+
+    //SETTERS
+    public static void setXqs(XQDataSource xqs) {
+        DAO.xqs = xqs;
+    }
+
+    public static void setXconn(XQConnection xconn) {
+        DAO.xconn = xconn;
+    }
+
+    public static void setUri(String uri) {
+        DAO.uri = uri;
+    }
+
+    public static void setAdmin(String admin) {
+        DAO.admin = admin;
+    }
+
+    public static void setPassword(String password) {
+        DAO.password = password;
     }
 }
