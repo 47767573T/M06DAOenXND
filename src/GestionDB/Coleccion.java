@@ -30,19 +30,21 @@ public class Coleccion {
             CollectionManagementService colService = (CollectionManagementService) col.getService("CollectionManagementService", "1.0");
             colService.createCollection(nombre);
 
+            System.out.println("Creada coleccion");
+
             return true;
 
         } catch (ClassNotFoundException e) {
-            System.out.println("ERROR DAO.Coleccion.crear: "+e);
+            System.out.println("ERROR en DAO.crearColeccion/Coleccion.crear: "+e);
             return false;
         } catch (InstantiationException e) {
-            System.out.println("ERROR DAO.Coleccion.crear: "+e);
+            System.out.println("ERROR en DAO.crearColeccion/Coleccion.crear: "+e);
             return false;
         } catch (IllegalAccessException e) {
-            System.out.println("ERROR DAO.Coleccion.crear: "+e);
+            System.out.println("ERROR en DAO.crearColeccion/Coleccion.crear: "+e);
             return false;
         } catch (XMLDBException e) {
-            System.out.println("ERROR DAO.Coleccion.crear: "+e);
+            System.out.println("ERROR en DAO.crearColeccion/Coleccion.crear: "+e);
             return false;
         }
     }

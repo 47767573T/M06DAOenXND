@@ -15,38 +15,99 @@ public class Recurso {
 
     private static String driver = "org.exist.xmldb.DatabaseImpl";
 
-    public static boolean introducir (String uri, String login, String password, String nombreCol
+    /**
+     * Introduce un recurso en la base de datos dada
+     *
+     * @param uri         localizacion de directorios donde aloja la coleccion
+     * @param login       clave de login
+     * @param password    clave de password
+     * @param nombreCol   nombre de la coleccion donde se desea introducir el recurso
+     * @param pathRecurso path absoluta del archivo que se desee introducir
+     * @return boolean true = introducido, false no introducido
+     */
+    public static boolean introducir(String uri, String login, String password, String nombreCol
             , String pathRecurso) {
 
-        Class cl = Class.forName(driver);
-        Database database = (Database) cl.newInstance();
-        database.setProperty("create-database", "true");
+        boolean esIntroducido = false;
 
-        // crear el manegador
-        DatabaseManager.registerDatabase(database);
-
-        //Crear fichero con la ruta del recurso
-        File fichero = new File(pathRecurso);
-
-        //Invocar la coleccion donde añadir el recurso
-        Collection col = null;
-
+        Class cl = null;
         try {
+            cl = Class.forName(driver);
+            Database database = null;
+            database = (Database) cl.newInstance();
+            database.setProperty("create-database", "true");
 
-            col = DatabaseManager.getCollection(uri + "/db/"+nombreCol, login, password);
+            // crear el Manager del DB
+            DatabaseManager.registerDatabase(database);
+
+            //Crear fichero con la ruta del recurso
+            File fichero = new File(pathRecurso);
+
+            //Invocar la coleccion donde añadir el recurso
+            Collection col = null;
+            col = DatabaseManager.getCollection(uri + "/db/" + nombreCol, login, password);
 
             //Añade el recuro
-            Resource recurso = col.createResource(pathRecurso,"XMLResource");
+            Resource recurso = col.createResource(pathRecurso, "XMLResource");
             recurso.setContent(fichero);
             col.storeResource(recurso);
 
-            return true;
+            System.out.println("Recurso introducido");
 
+            esIntroducido = true;
+
+        } catch (ClassNotFoundException e) {
+            System.out.println("ERROR en DAO.introducirRecursos/Recurso.introducir: " + e);
+        } catch (InstantiationException e) {
+            System.out.println("ERROR en DAO.introducirRecursos/Recurso.introducir: " + e);
+        } catch (IllegalAccessException e) {
+            System.out.println("ERROR en DAO.introducirRecursos/Recurso.introducir: " + e);
         } catch (XMLDBException e) {
-            System.out.println("ERROR DAO.Recurso.Introducir: "+e);
-
-            return false;
-
+            System.out.println("ERROR en DAO.introducirRecursos/Recurso.introducir: " + e);
         }
+
+        return esIntroducido;
+
+    }
+
+    public static boolean borrar(String uri, String login, String password, String nombreCol
+            , String nombreRecurso) {
+
+        boolean esIntroducido = false;
+
+        Class cl = null;
+        try {
+            cl = Class.forName(driver);
+            Database database = null;
+            database = (Database) cl.newInstance();
+            database.setProperty("create-database", "true");
+
+            // crear el Manager del DB
+            DatabaseManager.registerDatabase(database);
+
+            //Invocar la coleccion donde añadir el recurso
+            Collection col = null;
+            col = DatabaseManager.getCollection(uri + "/db/" + nombreCol, login, password);
+
+            //Añade el recurso
+            Resource recurso = col.createResource(nombreRecurso, "XMLResource");
+            col.removeResource(recurso);
+
+            System.out.println("El recurso esta borrado.");
+
+            esIntroducido = true;
+
+        } catch (ClassNotFoundException e) {
+            System.out.println("ERROR en DAO.introducirRecursos/Recurso.borrar: " + e);
+        } catch (InstantiationException e) {
+            System.out.println("ERROR en DAO.introducirRecursos/Recurso.borrar: " + e);
+        } catch (IllegalAccessException e) {
+            System.out.println("ERROR en DAO.introducirRecursos/Recurso.borrar: " + e);
+        } catch (XMLDBException e) {
+            System.out.println("ERROR en DAO.introducirRecursos/Recurso.borrar: " + e);
+        }
+
+        return esIntroducido;
+
     }
 }
